@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import shutil
 import warnings
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -165,6 +166,17 @@ def maybe_plot(df: pd.DataFrame) -> None:
 
 
 
+
+
+def ensure_ffmpeg_available() -> None:
+    """Ensure ffmpeg binary is available for Whisper audio decoding."""
+    if shutil.which("ffmpeg") is None:
+        raise EnvironmentError(
+            "ffmpeg is required by Whisper but was not found on PATH. "
+            "Install it (e.g., Ubuntu/Debian: 'sudo apt-get install ffmpeg', "
+            "macOS: 'brew install ffmpeg') and rerun."
+        )
+
 def resolve_dataset_paths(dataset_dir: Path) -> tuple[Path, Path]:
     """Resolve LJ Speech directory whether user points to root or LJSpeech-1.1."""
     raw_arg = str(dataset_dir)
@@ -198,6 +210,8 @@ def resolve_dataset_paths(dataset_dir: Path) -> tuple[Path, Path]:
 
 def main() -> None:
     args = parse_args()
+
+    ensure_ffmpeg_available()
 
     wav_dir, metadata_path = resolve_dataset_paths(args.dataset_dir)
 

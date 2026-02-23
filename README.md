@@ -41,6 +41,16 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Install `ffmpeg` (required by Whisper):
+
+```bash
+# Ubuntu / Debian
+sudo apt-get update && sudo apt-get install -y ffmpeg
+
+# macOS (Homebrew)
+brew install ffmpeg
+```
+
 ---
 
 ## Dataset
