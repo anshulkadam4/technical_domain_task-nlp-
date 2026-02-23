@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import difflib
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
 from jiwer import wer
@@ -135,34 +135,14 @@ def maybe_plot(df: pd.DataFrame) -> None:
     plt.close()
 
 
-
-
-def resolve_dataset_paths(dataset_dir: Path) -> tuple[Path, Path]:
-    """Resolve LJ Speech directory whether user points to root or LJSpeech-1.1."""
-    dataset_dir = dataset_dir.expanduser().resolve()
-
-    direct_wavs = dataset_dir / "wavs"
-    direct_meta = dataset_dir / "metadata.csv"
-    if direct_wavs.exists():
-        return direct_wavs, direct_meta
-
-    nested_dir = dataset_dir / "LJSpeech-1.1"
-    nested_wavs = nested_dir / "wavs"
-    nested_meta = nested_dir / "metadata.csv"
-    if nested_wavs.exists():
-        return nested_wavs, nested_meta
-
-    raise FileNotFoundError(
-        "Could not find LJ Speech wav files. "
-        f"Checked: '{direct_wavs}' and '{nested_wavs}'. "
-        "Pass --dataset-dir as either the LJSpeech-1.1 folder itself "
-        "or its parent directory."
-    )
-
 def main() -> None:
     args = parse_args()
 
-    wav_dir, metadata_path = resolve_dataset_paths(args.dataset_dir)
+    wav_dir = args.dataset_dir / "wavs"
+    metadata_path = args.dataset_dir / "metadata.csv"
+
+    if not wav_dir.exists():
+        raise FileNotFoundError(f"Could not find wav directory: {wav_dir}")
 
     id_to_gt = load_metadata(metadata_path)
 

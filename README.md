@@ -66,16 +66,12 @@ LJSpeech-1.1/
 
 ```bash
 python stt_grammar_pipeline.py \
-  --dataset-dir /absolute/path/to/LJSpeech-1.1 \
+  --dataset-dir /path/to/LJSpeech-1.1 \
   --output-csv results.csv \
   --model base \
   --language en \
   --plot
 ```
-
-`--dataset-dir` can point to either:
-- the `LJSpeech-1.1` directory itself, or
-- its parent directory (the script will auto-detect `LJSpeech-1.1/wavs`).
 
 ### Useful flags
 
