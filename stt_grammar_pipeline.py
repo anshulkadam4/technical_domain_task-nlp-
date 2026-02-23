@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import warnings
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -24,6 +25,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", type=str, default="cpu", choices=["cpu", "cuda"], help="Inference device")
     parser.add_argument("--limit", type=int, default=None, help="Process only first N files")
     parser.add_argument("--no-grammar", action="store_true", help="Disable grammar correction")
+    parser.add_argument(
+        "--grammar-mode",
+        type=str,
+        choices=["auto", "local", "public"],
+        default="auto",
+        help=(
+            "Grammar backend: auto (try public then local), "
+            "public (no local model download), or local"
+        ),
+    )
     parser.add_argument("--plot", action="store_true", help="Generate optional plots")
     return parser.parse_args()
 
@@ -49,8 +60,25 @@ def init_asr_model(model_name: str, device: str):
     return whisper.load_model(model_name, device=device)
 
 
-def init_grammar_tool(language: str):
+def init_grammar_tool(language: str, mode: str = "auto"):
     import language_tool_python
+
+    if mode not in {"auto", "local", "public"}:
+        raise ValueError(f"Unsupported grammar mode: {mode}")
+
+    if mode in {"auto", "public"}:
+        try:
+            return language_tool_python.LanguageToolPublicAPI(language)
+        except Exception as exc:
+            if mode == "public":
+                raise RuntimeError(
+                    "Failed to initialize LanguageTool Public API. "
+                    "Use --grammar-mode local or --no-grammar."
+                ) from exc
+            warnings.warn(
+                f"Public API unavailable ({exc}); falling back to local LanguageTool.",
+                RuntimeWarning,
+            )
 
     return language_tool_python.LanguageTool(language)
 
@@ -188,7 +216,7 @@ def main() -> None:
     grammar_tool = None
     if not args.no_grammar:
         print("Initializing grammar correction tool...")
-        grammar_tool = init_grammar_tool(args.language)
+        grammar_tool = init_grammar_tool(args.language, args.grammar_mode)
 
     rows = []
 

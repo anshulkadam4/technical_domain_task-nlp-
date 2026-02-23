@@ -73,6 +73,8 @@ python stt_grammar_pipeline.py \
   --plot
 ```
 
+By default, grammar uses `--grammar-mode auto` (tries public API first to avoid heavy local download, then falls back to local if needed).
+
 `--dataset-dir` can point to either:
 - the `LJSpeech-1.1` directory itself, or
 - its parent directory (the script will auto-detect `LJSpeech-1.1/wavs`).
@@ -89,14 +91,52 @@ python stt_grammar_pipeline.py --dataset-dir /home/you/datasets/LJSpeech-1.1
 python stt_grammar_pipeline.py --dataset-dir /home/you/datasets
 ```
 
+
+## Common command mistakes
+
+If you see `bash: --output-csv: command not found`, it usually means a multi-line command was pasted without line-continuation backslashes.
+
+Use either a **single-line** command:
+
+```bash
+python stt_grammar_pipeline.py --dataset-dir /home/you/datasets/LJSpeech-1.1 --output-csv results.csv --model base --language en --plot
+```
+
+
+Or keep backslashes at the end of each continued line:
+
+```bash
+python stt_grammar_pipeline.py \
+  --dataset-dir /home/you/datasets/LJSpeech-1.1 \
+  --output-csv results.csv \
+  --model base \
+  --language en \
+  --plot
+```
+
+
 ### Useful flags
 
 - `--limit N` – process only first `N` files
 - `--device cpu|cuda` – select Whisper device
 - `--no-grammar` – skip grammar correction
+- `--grammar-mode auto|public|local` – choose grammar backend (`public` avoids local 255MB download)
 - `--plot` – generate `wer_comparison.png` and `corrections_per_file.png`
 
 ---
+
+
+If your process gets terminated while initializing grammar correction, run either:
+
+```bash
+python stt_grammar_pipeline.py --dataset-dir /home/you/datasets/LJSpeech-1.1 --grammar-mode public
+```
+
+or (ASR-only):
+
+```bash
+python stt_grammar_pipeline.py --dataset-dir /home/you/datasets/LJSpeech-1.1 --no-grammar
+```
 
 ## Output
 
