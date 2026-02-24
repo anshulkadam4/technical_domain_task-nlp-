@@ -180,3 +180,24 @@ The script prints summary metrics and saves a CSV containing:
 
 - First run of Whisper and LanguageTool may download model assets.
 - Grammar correction can improve readability, but WER may improve or worsen depending on how corrections align with ground truth.
+
+## Screenshots Demo
+
+<img width="1919" height="1199" alt="Screenshot 2026-02-24 191308" src="https://github.com/user-attachments/assets/ae55f71d-dc6b-4afe-b856-1e8ee616e806" />
+
+<img width="1918" height="1196" alt="Screenshot 2026-02-24 190221" src="https://github.com/user-attachments/assets/45f1c5c2-cd64-43ec-a59f-4be387c7ca90" />
+
+## Video Demo
+
+
+https://github.com/user-attachments/assets/d8e27f0c-2fa0-4278-bf17-111032f19af9
+
+
+
+
+
+
+
+
+
+
