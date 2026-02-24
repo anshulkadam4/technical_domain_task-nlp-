@@ -125,6 +125,20 @@ python stt_grammar_pipeline.py \
 ```
 
 
+
+### Version / argument mismatch troubleshooting
+
+If you run `--grammar-mode public` and see `unrecognized arguments: --grammar-mode public`, you are likely running an older copy of the script from a different folder.
+
+Check which script/version you are executing:
+
+```bash
+python stt_grammar_pipeline.py --version
+python stt_grammar_pipeline.py --help
+```
+
+`--help` should list `--grammar-mode {auto,local,public}`. If it does not, run from this repository folder and update your local files before retrying.
+
 ### Useful flags
 
 - `--limit N` – process only first `N` files

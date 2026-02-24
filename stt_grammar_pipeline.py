@@ -14,11 +14,14 @@ import pandas as pd
 from jiwer import wer
 from tqdm import tqdm
 
+__version__ = "1.1.0"
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Convert LJ Speech audio to text and apply grammar correction."
     )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--dataset-dir", type=Path, required=True, help="Path to LJSpeech-1.1")
     parser.add_argument("--output-csv", type=Path, default=Path("results.csv"), help="Output CSV path")
     parser.add_argument("--model", type=str, default="base", help="Whisper model name")
