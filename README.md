@@ -196,11 +196,11 @@ without plot
 
 https://github.com/user-attachments/assets/d8e27f0c-2fa0-4278-bf17-111032f19af9
 
-With plot
+With result and plot
 
 https://github.com/user-attachments/assets/b9532ba2-f772-4bcc-b349-00ea4151f671
 
-With result and plot
+With plot
 
 https://github.com/user-attachments/assets/460ebd68-6b4d-41cd-b729-322283d69418
 
