@@ -97,6 +97,9 @@ Quick examples:
 # If your dataset is at /home/you/datasets/LJSpeech-1.1
 python stt_grammar_pipeline.py --dataset-dir /home/you/datasets/LJSpeech-1.1
 
+#if you want both plot and results csv file
+python stt_grammar_pipeline.py --dataset-dir /home/you/datasets --grammar-mode local --output-csv sample_results.csv --plot
+
 # If your dataset folder contains LJSpeech-1.1/
 python stt_grammar_pipeline.py --dataset-dir /home/you/datasets
 ```
@@ -189,12 +192,17 @@ The script prints summary metrics and saves a CSV containing:
 
 ## Video Demo
 
+without plot
 
 https://github.com/user-attachments/assets/d8e27f0c-2fa0-4278-bf17-111032f19af9
 
+With plot
 
+https://github.com/user-attachments/assets/b9532ba2-f772-4bcc-b349-00ea4151f671
 
+With result and plot
 
+https://github.com/user-attachments/assets/460ebd68-6b4d-41cd-b729-322283d69418
 
 
 
